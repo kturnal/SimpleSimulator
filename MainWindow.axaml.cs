@@ -4,7 +4,6 @@ using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Threading;
-//using UIThread = Avalonia.Threading.Dispatcher.UIThread;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,36 +12,21 @@ namespace SimpleSimulator
 {
     public partial class MainWindow : Window
     {
-
-        private TextBox? speedInput;
-        private TextBox? angleInput;
-        private TextBox? heightInput;
-        private Button? simulateButton;
-        private Canvas? canvas;
-        private TextBlock? simulationDataLabel;
-
+        private Canvas? _canvas;
+        private SimulationViewModel _simulationViewModel;
 
         public MainWindow()
         {
-            InitializeComponent();
-        }
+            _simulationViewModel = new SimulationViewModel();
+            DataContext = _simulationViewModel;
+            _canvas = this.FindControl<Canvas>("SimulationCanvas")!;
 
-        private void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-            speedInput = this.FindControl<TextBox>("SpeedInput")!;
-            angleInput = this.FindControl<TextBox>("AngleInput")!;
-            heightInput = this.FindControl<TextBox>("HeightInput")!;
-            simulateButton = this.FindControl<Button>("SimulateButton")!;
-            canvas = this.FindControl<Canvas>("SimulationCanvas")!;
-            simulationDataLabel = this.FindControl<TextBlock>("SimulationDataLabel")!;
-
-            //fill with initial values for fast testing
-            speedInput.Text = "20";
-            angleInput.Text = "60";
-            heightInput.Text = "10";
-            
-            simulateButton.Click += OnSimulateClicked;
+            // Manually bind the simulate button since Avalonia doesn't have built-in commands
+            var simulateButton = this.FindControl<Button>("SimulateButton");
+            if (simulateButton != null)
+            {
+                simulateButton.Click += OnSimulateClicked;
+            }
         }
 
         /// <summary>
@@ -52,16 +36,8 @@ namespace SimpleSimulator
         /// <param name="e">Event arguments.</param>
         private async void OnSimulateClicked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-
-            if (speedInput == null || angleInput == null || heightInput == null || canvas == null)
-                return;
-
-            if (double.TryParse(speedInput.Text, out double speed) &&
-                double.TryParse(angleInput.Text, out double angle) &&
-                double.TryParse(heightInput.Text, out double initialHeight))
-            {
-                await RunProjectileMotionSimulation(speed, angle, initialHeight);
-            }
+            _canvas.Children.Clear(); // Clear previous simulation points
+            await RunSimulation();
         }
 
         /// <summary>
@@ -70,23 +46,22 @@ namespace SimpleSimulator
         /// <param name="speed">Input speed of projectile.</param>
         /// <param name="angle">The initial launching angle of the projectile.</param>
         /// <param name="initialHeight">The initial height of the projectile.</param>
-        private async Task RunProjectileMotionSimulation(double speed, double angle, double initialHeight)
+        private async Task RunSimulation()
         {
+            var speed = _simulationViewModel.Speed;
             double g = 9.81; // Gravity
-            double radians = Math.PI * angle / 180.0;
+            double radians = Math.PI * _simulationViewModel.Angle / 180.0;
             double vx = speed * Math.Cos(radians);
             double vy = speed * Math.Sin(radians);
             double timeStep = 0.05;
             double time = 0;
 
-            List<Ellipse> projectiles = new List<Ellipse>();
-
-            canvas.Children.Clear(); // NRE possibility? 
+            //List<Ellipse> projectiles = new List<Ellipse>();
 
             while (true)
             {
                 double x = vx * time;
-                double y = initialHeight + vy * time - 0.5 * g * time * time;
+                double y = _simulationViewModel.Height + vy * time - 0.5 * g * time * time;
                 
                 if (y < 0) 
                     break; // Stop when projectile hits the ground
@@ -98,24 +73,28 @@ namespace SimpleSimulator
                     Fill = Brushes.Red
                 };
 
-                Canvas.SetLeft(projectile, x * 5); // Scale for visualization
-                Canvas.SetTop(projectile, 300 - (y * 5)); // Invert Y-axis for correct display
-                canvas.Children.Add(projectile);
-                projectiles.Add(projectile);
-
-                Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+                await Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    simulationDataLabel!.Text = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                    Canvas.SetLeft(projectile, x * 5); // Scale for visualization
+                    Canvas.SetTop(projectile, 300 - (y * 5)); // Invert Y-axis for correct display
+                    _canvas.Children.Add(projectile);
                 });
-                
+
+                // Update simulation data in ViewModel
+                await Dispatcher.UIThread.InvokeAsync(() =>
+                {
+                    _simulationViewModel.SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                });
+
                 await Task.Delay(50);
                 time += timeStep;
             }
 
-            Avalonia.Threading.Dispatcher.UIThread.Post(() =>
+            // Mark simulation as complete
+            Dispatcher.UIThread.InvokeAsync(() =>
             {
-                simulationDataLabel!.Text = "Simulation Complete!";
-            });             
+                _simulationViewModel.SimulationData = "Simulation Complete!";
+            });      
         }
     }
 }

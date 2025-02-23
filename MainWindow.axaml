@@ -1,30 +1,32 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleSimulator.MainWindow"
-        Title="SimpleSimulator - Projectile Motion"
-        Width="800"
-        Height="600">
+        xmlns:local="clr-namespace:SimpleSimulator"
+        Title="Projectile Motion Simulator"
+        Width="600"
+        Height="400">  
+    <Window.DataContext>
+        <local:SimulationViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <TextBlock Text="Speed (m/s):" Margin="5"/>
-            <TextBox x:Name="SpeedInput" Width="50"/>
+            <TextBox Text="{Binding Speed, Mode=TwoWay}" Width="50" Margin="5"/>
             <TextBlock Text="Angle (°):" Margin="5"/>
-            <TextBox x:Name="AngleInput" Width="50"/>
+            <TextBox Text="{Binding Angle, Mode=TwoWay}" Width="50" Margin="5"/>
             <TextBlock Text="Height (m):" Margin="5"/>
-            <TextBox x:Name="HeightInput" Width="50"/>
+            <TextBox Text="{Binding Height, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
         </StackPanel>
-        
-        <TextBlock x:Name="SimulationDataLabel" Grid.Row="1" Width="100" Height="20" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
 
-        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray"/>
+        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
+
+        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="LightGray"/>
     </Grid>
 </Window>
