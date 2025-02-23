@@ -1,13 +1,15 @@
+    <!-- Setting DataContext in XAML for better performance -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.MainWindow"
         xmlns:local="clr-namespace:SimpleSimulator"
+        x:DataType="local:SimulationViewModel" 
         Title="Projectile Motion Simulator"
         Width="600"
         Height="400">  
-    <Window.DataContext>
-        <local:SimulationViewModel/>
-    </Window.DataContext>
+        <Window.DataContext>
+            <local:SimulationViewModel/>
+        </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

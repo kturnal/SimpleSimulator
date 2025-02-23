@@ -34,8 +34,13 @@ namespace SimpleSimulator
         /// </summary>
         /// <param name="sender">Sender object that subscribes to the event.</param>
         /// <param name="e">Event arguments.</param>
-        private async void OnSimulateClicked(object sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private async void OnSimulateClicked(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            if (_canvas == null)
+            {
+                Console.WriteLine("Error: SimulationCanvas is not found.");
+                return;
+            }
             _canvas.Children.Clear(); // Clear previous simulation points
             await RunSimulation();
         }
@@ -48,6 +53,12 @@ namespace SimpleSimulator
         /// <param name="initialHeight">The initial height of the projectile.</param>
         private async Task RunSimulation()
         {
+            if (_simulationViewModel == null || _canvas == null)
+            {
+                Console.WriteLine("Error: ViewModel or Canvas is not initialized.");
+                return;
+            }
+
             var speed = _simulationViewModel.Speed;
             double g = 9.81; // Gravity
             double radians = Math.PI * _simulationViewModel.Angle / 180.0;
@@ -91,7 +102,7 @@ namespace SimpleSimulator
             }
 
             // Mark simulation as complete
-            Dispatcher.UIThread.InvokeAsync(() =>
+            await Dispatcher.UIThread.InvokeAsync(() =>
             {
                 _simulationViewModel.SimulationData = "Simulation Complete!";
             });      
