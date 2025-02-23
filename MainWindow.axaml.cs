@@ -17,6 +17,7 @@ namespace SimpleSimulator
 
         public MainWindow()
         {
+            InitializeComponent(); // initializes the GUI components
             _simulationViewModel = new SimulationViewModel();
             DataContext = _simulationViewModel;
             _canvas = this.FindControl<Canvas>("SimulationCanvas")!;
