@@ -5,8 +5,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleSimulator.MainWindow"
         Title="SimpleSimulator - Projectile Motion"
-        Width="1024"
-        Height="768">
+        Width="800"
+        Height="600">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -23,6 +23,8 @@
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
         </StackPanel>
         
-        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="LightGray"/>
+        <TextBlock x:Name="SimulationDataLabel" Grid.Row="1" Width="100" Height="20" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
+
+        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray"/>
     </Grid>
 </Window>
