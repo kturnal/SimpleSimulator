@@ -1,0 +1,43 @@
+# Ignore build and bin directories
+bin/
+obj/
+
+# Rider and VS Code directories
+.idea/
+.vscode/
+
+# User-specific settings
+*.user
+*.suo
+*.cache
+*.pdb
+*.bak
+*.swp
+*.sln.docstates
+
+# NuGet packages
+*.nupkg
+packages/
+.nuget/
+
+# Logs, debug, and crash reports
+*.log
+*.tlog
+*.dotCover
+crash-reports/
+hs_err_pid*
+
+# Avalonia and dotnet build files
+/Debug/
+/Release/
+*.db
+*.lock.json
+
+# Secrets or Environment files
+.env
+.env.local
+secrets.json
+
+# OS-specific files
+.DS_Store
+Thumbs.db
