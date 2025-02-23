@@ -4,6 +4,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SimpleSimulator.MainWindow"
-        Title="SimpleSimulator">
-    Welcome to Avalonia!
+        Title="SimpleSimulator - Projectile Motion"
+        Width="1024"
+        Height="768">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+            <TextBlock Text="Speed (m/s):" Margin="5"/>
+            <TextBox x:Name="SpeedInput" Width="50"/>
+            <TextBlock Text="Angle (°):" Margin="5"/>
+            <TextBox x:Name="AngleInput" Width="50"/>
+            <TextBlock Text="Height (m):" Margin="5"/>
+            <TextBox x:Name="HeightInput" Width="50"/>
+            <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
+        </StackPanel>
+        
+        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="LightGray"/>
+    </Grid>
 </Window>
