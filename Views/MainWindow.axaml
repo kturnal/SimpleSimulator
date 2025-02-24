@@ -7,9 +7,9 @@
         Title="Projectile Motion Simulator"
         Width="800"
         Height="600">  
-        <Window.DataContext>
-            <viewModels:SimulationViewModel/>
-        </Window.DataContext>
+    <Window.DataContext>
+        <viewModels:SimulationViewModel/>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>

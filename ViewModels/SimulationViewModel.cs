@@ -1,10 +1,3 @@
-// using System.ComponentModel;
-// using System.Runtime.CompilerServices;
-// using System.Threading.Tasks;
-// using Avalonia.Threading;
-// using System;
-// using SimpleSimulator;
-// using SimpleSimulator.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -13,15 +6,10 @@ using System.Threading.Tasks;
 using Avalonia.Threading;
 using SimpleSimulator;
 using SimpleSimulator.Models;
+using SimpleSimulator.ViewModels;
 
 namespace SimpleSimulator.ViewModels
 {
-
-    public class AxisLabel
-    {
-        public string Label { get; set; }
-        public double Position { get; set; }
-    }
     public class SimulationViewModel : INotifyPropertyChanged
     {
         private double _speed = 20;
