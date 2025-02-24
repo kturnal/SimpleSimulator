@@ -7,6 +7,7 @@ using Avalonia.Threading;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SimpleSimulator.Models;
 
 namespace SimpleSimulator
 {
@@ -57,15 +58,9 @@ namespace SimpleSimulator
                 return;
             }
 
-            await _simulationViewModel.RunSimulation(_canvas);
-
-
-
-            var speed = _simulationViewModel.Speed;
-            double g = 9.81; // Gravity
-            double radians = Math.PI * _simulationViewModel.Angle / 180.0;
-            double vx = speed * Math.Cos(radians);
-            double vy = speed * Math.Sin(radians);
+            await _simulationViewModel.RunSimulation();
+            // Draw the projectile motion after calculation
+            var projectile = new ProjectileModel(_simulationViewModel.Speed, _simulationViewModel.Angle, _simulationViewModel.Height);
             double timeStep = 0.05;
             double time = 0;
 
