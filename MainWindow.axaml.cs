@@ -49,9 +49,6 @@ namespace SimpleSimulator
         /// <summary>
         /// Simulate projectile motion through an asnyc task.
         /// </summary>
-        /// <param name="speed">Input speed of projectile.</param>
-        /// <param name="angle">The initial launching angle of the projectile.</param>
-        /// <param name="initialHeight">The initial height of the projectile.</param>
         private async Task RunSimulation()
         {
             if (_simulationViewModel == null || _canvas == null)
@@ -59,6 +56,10 @@ namespace SimpleSimulator
                 Console.WriteLine("Error: ViewModel or Canvas is not initialized.");
                 return;
             }
+
+            await _simulationViewModel.RunSimulation(_canvas);
+
+
 
             var speed = _simulationViewModel.Speed;
             double g = 9.81; // Gravity
@@ -70,15 +71,12 @@ namespace SimpleSimulator
 
             //List<Ellipse> projectiles = new List<Ellipse>();
 
-            while (true)
+            while (!projectile.HasHitGround(time))
             {
-                double x = vx * time;
-                double y = _simulationViewModel.Height + vy * time - 0.5 * g * time * time;
-                
-                if (y < 0) 
-                    break; // Stop when projectile hits the ground
-                
-                var projectile = new Ellipse
+                double x = projectile.GetXPosition(time);
+                double y = projectile.GetYPosition(time);
+
+                var point = new Ellipse
                 {
                     Width = 5,
                     Height = 5,
@@ -87,26 +85,17 @@ namespace SimpleSimulator
 
                 await Dispatcher.UIThread.InvokeAsync(() =>
                 {
-                    Canvas.SetLeft(projectile, x * 5); // Scale for visualization
-                    Canvas.SetTop(projectile, 300 - (y * 5)); // Invert Y-axis for correct display
-                    _canvas.Children.Add(projectile);
-                });
-
-                // Update simulation data in ViewModel
-                await Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    _simulationViewModel.SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                    if (_canvas != null)
+                    {
+                        Canvas.SetLeft(point, x * 5);
+                        Canvas.SetTop(point, 300 - (y * 5));
+                        _canvas.Children.Add(point);
+                    }
                 });
 
                 await Task.Delay(50);
                 time += timeStep;
             }
-
-            // Mark simulation as complete
-            await Dispatcher.UIThread.InvokeAsync(() =>
-            {
-                _simulationViewModel.SimulationData = "Simulation Complete!";
-            });      
         }
     }
 }
