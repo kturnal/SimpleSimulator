@@ -46,27 +46,51 @@ namespace SimpleSimulator.Views
                 return;
             }
 
-            _canvas.Children.Clear(); // Clear previous simulation points
-            
-            await _simulationViewModel.RunSimulation((x, y) =>
-            {
-                var point = new Ellipse
-                {
-                    Width = 5,
-                    Height = 5,
-                    Fill = Brushes.Blue
-                };
+            //TODO find a clean way to reset the ellipse points while keeping the coordinate system. 
 
-                Dispatcher.UIThread.InvokeAsync(() =>
+            
+            // List<Control> coordinateElements = new List<Control>();
+
+
+            // foreach (var child in _canvas.Children)
+            // {
+            //     if (child is Line || (child is TextBlock tb && (string)tb.Tag == "AxisLabel"))
+            //     {
+            //         coordinateElements.Add((Control)child);
+            //     }
+            // }
+
+            // // Clear only the projectile elements
+            // _canvas.Children.Clear();
+
+            // // Re-add the coordinate system elements
+            // foreach (var element in coordinateElements)
+            // {
+            //     _canvas.Children.Add(element);
+            // }
+            
+            if (DataContext is SimulationViewModel viewModel)
+            {
+                await _simulationViewModel.RunSimulation((x, y) =>
                 {
-                    if (_canvas != null)
+                    Dispatcher.UIThread.InvokeAsync(() =>
                     {
-                        Canvas.SetLeft(point, 50 + (x * 50)); // Offset X to start from the Y-axis
-                        Canvas.SetTop(point, 300 - (y * 50)); // Invert Y-axis
+                        if (_canvas == null) return;
+
+                        var point = new Ellipse
+                        {
+                            Width = 5,
+                            Height = 5,
+                            Fill = Brushes.Blue
+                        };
+                        
+                        Canvas.SetLeft(point, x);
+                        Canvas.SetTop(point, y);
                         _canvas.Children.Add(point);
-                    }
+                        
+                    });
                 });
-            });
+            }
         }
     }
 }

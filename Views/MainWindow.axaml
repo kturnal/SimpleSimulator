@@ -6,17 +6,16 @@
         xmlns:views="clr-namespace:SimpleSimulator.Views"
         x:DataType="viewModels:SimulationViewModel"
         Title="Projectile Motion Simulator"
-        Width="800"
-        Height="600">  
+        Width="1024"
+        Height="768">  
     <Window.DataContext>
         <viewModels:SimulationViewModel/>
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-
-            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -29,17 +28,17 @@
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
             
         </StackPanel>
-
+        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
         
         <!-- Simulation Canvas with Coordinate System -->
-        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="Gray">
+        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray">
             <!-- X-Axis -->
-            <Line StartPoint="50,500" EndPoint="750,500" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="X (m)" Canvas.Left="760" Canvas.Top="490" FontWeight="Bold"/>
+            <Line StartPoint="50,500" EndPoint="800,500" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="X (m)" Canvas.Left="810" Canvas.Top="490" FontWeight="Bold"/>
 
             <!-- Y-Axis -->
-            <Line StartPoint="50,100" EndPoint="50,500" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="90" FontWeight="Bold"/>
+            <Line StartPoint="50,50" EndPoint="50,500" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="20" FontWeight="Bold"/>
 
             <!-- X-Axis Tick Marks -->
             <ItemsControl ItemsSource="{Binding XAxisLabels}">
@@ -47,7 +46,7 @@
                     <DataTemplate x:DataType="viewModels:AxisLabel">
                         <TextBlock Text="{Binding Label}" 
                                    Canvas.Left="{Binding Position}" 
-                                   Canvas.Top="520"/>
+                                   Canvas.Top="530"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl> 
@@ -57,13 +56,11 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:AxisLabel">
                         <TextBlock Text="{Binding Label}" 
-                                   Canvas.Left="25" 
+                                   Canvas.Left="30" 
                                    Canvas.Top="{Binding Position}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Canvas>
-
-        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>

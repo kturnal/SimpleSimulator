@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -16,6 +17,10 @@ namespace SimpleSimulator.ViewModels
         private double _angle = 60;
         private double _height = 10;
         private string _simulationData = "Ready to simulate.";
+
+        const double CanvasPadding = 50;   // Space from the left for the Y-axis
+        const double CanvasBottom = 500;   // Bottom of the canvas in pixels
+        const double ScaleFactor = 50;     // Scaling factor (meters to pixels)
 
         public double Speed
         {
@@ -77,7 +82,7 @@ namespace SimpleSimulator.ViewModels
             XAxisLabels.Clear();
             YAxisLabels.Clear();
 
-            int scaleFactor = 50;
+
 
             // X-Axis Labels (0m to 10m)
             for (int i = 0; i <= 10; i++)
@@ -85,7 +90,7 @@ namespace SimpleSimulator.ViewModels
                 XAxisLabels.Add(new AxisLabel
                 {
                     Label = $"{i}m",
-                    Position = 50 + (i * scaleFactor) // Scaling factor for spacing
+                    Position = CanvasPadding + (i * ScaleFactor) // Scaling factor for spacing
                 });
             }
 
@@ -95,7 +100,7 @@ namespace SimpleSimulator.ViewModels
                 YAxisLabels.Add(new AxisLabel
                 {
                     Label = $"{i}m",
-                    Position = 500 - (i * scaleFactor) // Scaling factor (inverted Y-axis)
+                    Position = CanvasBottom - (i * ScaleFactor) // Scaling factor (inverted Y-axis)
                 });
             }
 
@@ -108,18 +113,20 @@ namespace SimpleSimulator.ViewModels
             var projectile = new ProjectileModel(Speed, Angle, Height);
             double timeStep = 0.05;
             double time = 0;
+            double smallScaleFactor = ScaleFactor / 10;
 
             while (!projectile.HasHitGround(time))
                 {
-                    double x = projectile.GetXPosition(time);
-                    double y = projectile.GetYPosition(time);
+                    double x = CanvasPadding + (projectile.GetXPosition(time) * smallScaleFactor);
+                    double y = CanvasBottom - (projectile.GetYPosition(time) * smallScaleFactor);
 
-                    // Update UI with simulation data
-                    await Dispatcher.UIThread.InvokeAsync(() =>
-                    {
-                        SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
-                        onFrameRendered(x, y); // Calls the method to render dots in MainWindow.axaml.cs
-                    });
+                    SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                    onFrameRendered(x, y); 
+                    // // Update UI with simulation data
+                    // await Dispatcher.UIThread.InvokeAsync(() =>
+                    // {
+
+                    // });
 
                     await Task.Delay(50); // Wait for 50ms before next update
                     time += timeStep;
