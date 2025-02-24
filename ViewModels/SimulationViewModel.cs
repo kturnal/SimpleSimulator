@@ -3,10 +3,10 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using System;
-// Ensure that the correct namespace is used
 using SimpleSimulator;
 using SimpleSimulator.Models;
-namespace SimpleSimulator
+
+namespace SimpleSimulator.ViewModels
 {
     public class SimulationViewModel : INotifyPropertyChanged
     {
@@ -62,7 +62,7 @@ namespace SimpleSimulator
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task RunSimulation()
+        public async Task RunSimulation(Action<double, double> onFrameRendered)
         {
             var projectile = new ProjectileModel(Speed, Angle, Height);
             double timeStep = 0.05;
@@ -77,9 +77,10 @@ namespace SimpleSimulator
                     await Dispatcher.UIThread.InvokeAsync(() =>
                     {
                         SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                        onFrameRendered(x, y); // Calls the method to render dots in MainWindow.axaml.cs
                     });
 
-                    await Task.Delay(50);
+                    await Task.Delay(50); // Wait for 50ms before next update
                     time += timeStep;
                 }
 

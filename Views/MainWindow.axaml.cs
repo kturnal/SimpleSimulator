@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SimpleSimulator.Models;
+using SimpleSimulator.ViewModels;
+using SimpleSimulator;
 
-namespace SimpleSimulator
+namespace SimpleSimulator.Views
 {
     public partial class MainWindow : Window
     {
@@ -43,42 +45,19 @@ namespace SimpleSimulator
                 Console.WriteLine("Error: SimulationCanvas is not found.");
                 return;
             }
+
             _canvas.Children.Clear(); // Clear previous simulation points
-            await RunSimulation();
-        }
-
-        /// <summary>
-        /// Simulate projectile motion through an asnyc task.
-        /// </summary>
-        private async Task RunSimulation()
-        {
-            if (_simulationViewModel == null || _canvas == null)
+            
+            await _simulationViewModel.RunSimulation((x, y) =>
             {
-                Console.WriteLine("Error: ViewModel or Canvas is not initialized.");
-                return;
-            }
-
-            await _simulationViewModel.RunSimulation();
-            // Draw the projectile motion after calculation
-            var projectile = new ProjectileModel(_simulationViewModel.Speed, _simulationViewModel.Angle, _simulationViewModel.Height);
-            double timeStep = 0.05;
-            double time = 0;
-
-            //List<Ellipse> projectiles = new List<Ellipse>();
-
-            while (!projectile.HasHitGround(time))
-            {
-                double x = projectile.GetXPosition(time);
-                double y = projectile.GetYPosition(time);
-
                 var point = new Ellipse
                 {
                     Width = 5,
                     Height = 5,
-                    Fill = Brushes.Red
+                    Fill = Brushes.Blue
                 };
 
-                await Dispatcher.UIThread.InvokeAsync(() =>
+                Dispatcher.UIThread.InvokeAsync(() =>
                 {
                     if (_canvas != null)
                     {
@@ -87,10 +66,7 @@ namespace SimpleSimulator
                         _canvas.Children.Add(point);
                     }
                 });
-
-                await Task.Delay(50);
-                time += timeStep;
-            }
+            });
         }
     }
 }
