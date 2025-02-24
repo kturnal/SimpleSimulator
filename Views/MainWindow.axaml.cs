@@ -61,8 +61,8 @@ namespace SimpleSimulator.Views
                 {
                     if (_canvas != null)
                     {
-                        Canvas.SetLeft(point, x * 5);
-                        Canvas.SetTop(point, 300 - (y * 5));
+                        Canvas.SetLeft(point, 50 + (x * 50)); // Offset X to start from the Y-axis
+                        Canvas.SetTop(point, 300 - (y * 50)); // Invert Y-axis
                         _canvas.Children.Add(point);
                     }
                 });

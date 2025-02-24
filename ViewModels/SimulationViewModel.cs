@@ -1,13 +1,27 @@
+// using System.ComponentModel;
+// using System.Runtime.CompilerServices;
+// using System.Threading.Tasks;
+// using Avalonia.Threading;
+// using System;
+// using SimpleSimulator;
+// using SimpleSimulator.Models;
+using System;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Threading;
-using System;
 using SimpleSimulator;
 using SimpleSimulator.Models;
 
 namespace SimpleSimulator.ViewModels
 {
+
+    public class AxisLabel
+    {
+        public string Label { get; set; }
+        public double Position { get; set; }
+    }
     public class SimulationViewModel : INotifyPropertyChanged
     {
         private double _speed = 20;
@@ -55,11 +69,45 @@ namespace SimpleSimulator.ViewModels
             }
         }
 
+        public ObservableCollection<AxisLabel> XAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
+        public ObservableCollection<AxisLabel> YAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public SimulationViewModel()
+        {
+            GenerateAxisLabels();
+        }
+
+        private void GenerateAxisLabels()
+        {
+            XAxisLabels.Clear();
+            YAxisLabels.Clear();
+
+            // X-Axis Labels (0m to 10m)
+            for (int i = 0; i <= 10; i++)
+            {
+                XAxisLabels.Add(new AxisLabel
+                {
+                    Label = $"{i}m",
+                    Position = i * 50 + 50 // Scaling factor
+                });
+            }
+
+            // Y-Axis Labels (0m to 6m)
+            for (int i = 0; i <= 6; i++)
+            {
+                YAxisLabels.Add(new AxisLabel
+                {
+                    Label = $"{i}m",
+                    Position = 300 - (i * 50) // Scaling factor (inverted Y-axis)
+                });
+            }
         }
 
         public async Task RunSimulation(Action<double, double> onFrameRendered)

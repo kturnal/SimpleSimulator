@@ -2,18 +2,18 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.Views.MainWindow"
-        xmlns:local="clr-namespace:SimpleSimulator.ViewModels"
-        x:DataType="local:SimulationViewModel" 
+        xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
+        xmlns:views="clr-namespace:SimpleSimulator.Views"
         Title="Projectile Motion Simulator"
-        Width="600"
-        Height="400">  
+        Width="800"
+        Height="600">  
         <Window.DataContext>
-            <local:SimulationViewModel/>
+            <viewModels:SimulationViewModel/>
         </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <!-- <RowDefinition Height="Auto"/> -->
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -25,10 +25,40 @@
             <TextBlock Text="Height (m):" Margin="5"/>
             <TextBox Text="{Binding Height, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
+            <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
         </StackPanel>
 
-        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
+        <!-- Simulation Canvas with Coordinate System -->
+        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="White">
+            <!-- X-Axis -->
+            <Line StartPoint="0,300" EndPoint="700,300" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="X (m)" Canvas.Left="720" Canvas.Top="295" FontWeight="Bold"/>
 
-        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="LightGray"/>
+            <!-- Y-Axis -->
+            <Line StartPoint="50,0" EndPoint="50,300" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="-5" FontWeight="Bold"/>
+
+            <!-- X-Axis Tick Marks -->
+            <ItemsControl Items="{Binding XAxisLabels}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:AxisLabel">
+                        <TextBlock Text="{Binding Label}" 
+                                   Canvas.Left="{Binding Position}" 
+                                   Canvas.Top="310"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <!-- Y-Axis Tick Marks -->
+            <ItemsControl Items="{Binding YAxisLabels}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:AxisLabel">
+                        <TextBlock Text="{Binding Label}" 
+                                   Canvas.Left="10" 
+                                   Canvas.Top="{Binding Position}"/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Canvas>
     </Grid>
 </Window>
