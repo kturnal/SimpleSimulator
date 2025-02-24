@@ -1,3 +1,5 @@
+using System;
+
 namespace SimpleSimulator.Models
 {
     public class ProjectileModel
