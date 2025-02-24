@@ -57,12 +57,6 @@ namespace SimpleSimulator.ViewModels
             }
         }
 
-        public class AxisLabel
-        {
-            public string Label { get; set; } = string.Empty;
-            public double Position { get; set; }
-        }
-
         public ObservableCollection<AxisLabel> XAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
         public ObservableCollection<AxisLabel> YAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
 
@@ -83,25 +77,30 @@ namespace SimpleSimulator.ViewModels
             XAxisLabels.Clear();
             YAxisLabels.Clear();
 
+            int scaleFactor = 50;
+
             // X-Axis Labels (0m to 10m)
             for (int i = 0; i <= 10; i++)
             {
                 XAxisLabels.Add(new AxisLabel
                 {
                     Label = $"{i}m",
-                    Position = i * 50 + 50 // Scaling factor
+                    Position = 50 + (i * scaleFactor) // Scaling factor for spacing
                 });
             }
 
-            // Y-Axis Labels (0m to 6m)
-            for (int i = 0; i <= 6; i++)
+            // Y-Axis Labels (0m to 100m)
+            for (int i = 0; i <= 10; i++)
             {
                 YAxisLabels.Add(new AxisLabel
                 {
                     Label = $"{i}m",
-                    Position = 300 - (i * 50) // Scaling factor (inverted Y-axis)
+                    Position = 500 - (i * scaleFactor) // Scaling factor (inverted Y-axis)
                 });
             }
+
+            OnPropertyChanged(nameof(XAxisLabels));
+            OnPropertyChanged(nameof(YAxisLabels));
         }
 
         public async Task RunSimulation(Action<double, double> onFrameRendered)

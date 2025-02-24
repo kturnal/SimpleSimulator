@@ -14,8 +14,9 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- <RowDefinition Height="Auto"/> -->
+
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
@@ -26,40 +27,43 @@
             <TextBlock Text="Height (m):" Margin="5"/>
             <TextBox Text="{Binding Height, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
-            <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
+            
         </StackPanel>
 
+        
         <!-- Simulation Canvas with Coordinate System -->
-        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="White">
+        <Canvas x:Name="SimulationCanvas" Grid.Row="1" Background="Gray">
             <!-- X-Axis -->
-            <Line StartPoint="0,300" EndPoint="700,300" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="X (m)" Canvas.Left="720" Canvas.Top="295" FontWeight="Bold"/>
+            <Line StartPoint="50,500" EndPoint="750,500" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="X (m)" Canvas.Left="760" Canvas.Top="490" FontWeight="Bold"/>
 
             <!-- Y-Axis -->
-            <Line StartPoint="50,0" EndPoint="50,300" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="-5" FontWeight="Bold"/>
+            <Line StartPoint="50,100" EndPoint="50,500" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="90" FontWeight="Bold"/>
 
             <!-- X-Axis Tick Marks -->
-            <ItemsControl Items="{Binding XAxisLabels}">
+            <ItemsControl ItemsSource="{Binding XAxisLabels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:AxisLabel">
                         <TextBlock Text="{Binding Label}" 
                                    Canvas.Left="{Binding Position}" 
-                                   Canvas.Top="310"/>
+                                   Canvas.Top="520"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl> 
 
             <!-- Y-Axis Tick Marks -->
-            <ItemsControl Items="{Binding YAxisLabels}">
+            <ItemsControl ItemsSource="{Binding YAxisLabels}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:AxisLabel">
                         <TextBlock Text="{Binding Label}" 
-                                   Canvas.Left="10" 
+                                   Canvas.Left="25" 
                                    Canvas.Top="{Binding Position}"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </Canvas>
+
+        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
     </Grid>
 </Window>
