@@ -4,6 +4,7 @@
         x:Class="SimpleSimulator.Views.MainWindow"
         xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
+        x:DataType="viewModels:SimulationViewModel"
         Title="Projectile Motion Simulator"
         Width="800"
         Height="600">  
@@ -47,7 +48,7 @@
                                    Canvas.Top="310"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
-            </ItemsControl>
+            </ItemsControl> 
 
             <!-- Y-Axis Tick Marks -->
             <ItemsControl Items="{Binding YAxisLabels}">
