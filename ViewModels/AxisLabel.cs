@@ -5,7 +5,7 @@ namespace SimpleSimulator.ViewModels
 {
     public class AxisLabel : INotifyPropertyChanged
     {
-        private string _label;
+        private string _label = string.Empty;
         private double _position;
 
         public string Label
