@@ -8,9 +8,6 @@
         Title="Projectile Motion Simulator"
         Width="1024"
         Height="768">  
-    <Window.DataContext>
-        <viewModels:SimulationViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -33,34 +30,11 @@
         <!-- Simulation Canvas with Coordinate System -->
         <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray">
             <!-- X-Axis -->
-            <Line StartPoint="50,500" EndPoint="800,500" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="X (m)" Canvas.Left="810" Canvas.Top="490" FontWeight="Bold"/>
-
+            <Line StartPoint="50,600" EndPoint="800,600" Stroke="Black" StrokeThickness="2"/>
+            <TextBlock Text="X (m)" Canvas.Left="810" Canvas.Top="590" FontWeight="Bold"/>
             <!-- Y-Axis -->
-            <Line StartPoint="50,50" EndPoint="50,500" Stroke="Black" StrokeThickness="2"/>
+            <Line StartPoint="50,50" EndPoint="50,600" Stroke="Black" StrokeThickness="2"/>
             <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="20" FontWeight="Bold"/>
-
-            <!-- X-Axis Tick Marks -->
-            <ItemsControl ItemsSource="{Binding XAxisLabels}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="viewModels:AxisLabel">
-                        <TextBlock Text="{Binding Label}" 
-                                   Canvas.Left="{Binding Position}" 
-                                   Canvas.Top="530"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl> 
-
-            <!-- Y-Axis Tick Marks -->
-            <ItemsControl ItemsSource="{Binding YAxisLabels}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="viewModels:AxisLabel">
-                        <TextBlock Text="{Binding Label}" 
-                                   Canvas.Left="30" 
-                                   Canvas.Top="{Binding Position}"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
         </Canvas>
     </Grid>
 </Window>

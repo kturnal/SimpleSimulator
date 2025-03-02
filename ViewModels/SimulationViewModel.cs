@@ -13,13 +13,13 @@ namespace SimpleSimulator.ViewModels
 {
     public class SimulationViewModel : INotifyPropertyChanged
     {
-        private double _speed = 20;
+        private double _speed = 30;
         private double _angle = 60;
-        private double _height = 10;
+        private double _height = 0;
         private string _simulationData = "Ready to simulate.";
 
-        const double CanvasPadding = 50;   // Space from the left for the Y-axis
-        const double CanvasBottom = 500;   // Bottom of the canvas in pixels
+        const double CoordinateSystemStartY = 50;   // Space from the left for the Y-axis
+        const double CoordinateSystemStartX = 595;   // Bottom of the canvas in pixels
         const double ScaleFactor = 50;     // Scaling factor (meters to pixels)
 
         public double Speed
@@ -62,8 +62,8 @@ namespace SimpleSimulator.ViewModels
             }
         }
 
-        public ObservableCollection<AxisLabel> XAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
-        public ObservableCollection<AxisLabel> YAxisLabels { get; set; } = new ObservableCollection<AxisLabel>();
+        public ObservableCollection<AxisLabel> XAxisLabels { get; set; } = [];
+        public ObservableCollection<AxisLabel> YAxisLabels { get; set; } = [];
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -79,18 +79,19 @@ namespace SimpleSimulator.ViewModels
 
         private void GenerateAxisLabels()
         {
+            Console.WriteLine("[GenerateAxisLabels] Start generating axis labels..");
             XAxisLabels.Clear();
             YAxisLabels.Clear();
-
-
+            double xAxisLabelStartPos = CoordinateSystemStartY -5;
+            double yAxisLabelStartPos = CoordinateSystemStartX -5;
 
             // X-Axis Labels (0m to 10m)
-            for (int i = 0; i <= 10; i++)
+            for (int i = 0; i <= 14; i++)
             {
                 XAxisLabels.Add(new AxisLabel
                 {
-                    Label = $"{i}m",
-                    Position = CanvasPadding + (i * ScaleFactor) // Scaling factor for spacing
+                    Label = $"{i*10}",
+                    Position = xAxisLabelStartPos + (i * ScaleFactor)
                 });
             }
 
@@ -99,8 +100,8 @@ namespace SimpleSimulator.ViewModels
             {
                 YAxisLabels.Add(new AxisLabel
                 {
-                    Label = $"{i}m",
-                    Position = CanvasBottom - (i * ScaleFactor) // Scaling factor (inverted Y-axis)
+                    Label = $"{i*10}",
+                    Position = yAxisLabelStartPos - (i * ScaleFactor) -5// Scaling factor (inverted Y-axis)
                 });
             }
 
@@ -116,26 +117,22 @@ namespace SimpleSimulator.ViewModels
             double smallScaleFactor = ScaleFactor / 10;
 
             while (!projectile.HasHitGround(time))
-                {
-                    double x = CanvasPadding + (projectile.GetXPosition(time) * smallScaleFactor);
-                    double y = CanvasBottom - (projectile.GetYPosition(time) * smallScaleFactor);
+            {
+                double x = CoordinateSystemStartY + (projectile.GetXPosition(time) * smallScaleFactor);
+                double y = CoordinateSystemStartX - (projectile.GetYPosition(time) * smallScaleFactor);
 
-                    SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
-                    onFrameRendered(x, y); 
-                    // // Update UI with simulation data
-                    // await Dispatcher.UIThread.InvokeAsync(() =>
-                    // {
+                SimulationData = $"Time: {time:F2}s | X: {x:F2}m | Y: {y:F2}m";
+                Console.WriteLine("Data: " + SimulationData);
+                onFrameRendered(x, y); 
 
-                    // });
+                await Task.Delay(50); // Wait for 50ms before next update
+                time += timeStep;
+            }
 
-                    await Task.Delay(50); // Wait for 50ms before next update
-                    time += timeStep;
-                }
-
-                await Dispatcher.UIThread.InvokeAsync(() =>
-                {
-                    SimulationData = "Simulation Complete!";
-                });
+            await Dispatcher.UIThread.InvokeAsync(() =>
+            {
+                SimulationData = "Simulation Complete!";
+            });
         }
     }
 }

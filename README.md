@@ -14,9 +14,6 @@ This project is still WIP. An MVP of the solution will be done after the followi
 - Improve Simulation UI/UX
     - Improve the layout of the simulation screen.
     - Ensure input fields have default values (for user convenience).
-- Fix Coordinate System Bugs
-    - Ensure X/Y labels update dynamically and position correctly.
-    - Fix issue where simulation points disappear or are misaligned.
 - Application Testing
     - Increase the test coverage to an initial of 70%.
     - Test on Windows (native .exe) and Linux (via .NET Runtime).

@@ -5,11 +5,8 @@ using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Threading;
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using SimpleSimulator.Models;
 using SimpleSimulator.ViewModels;
-using SimpleSimulator;
+using System.Collections.ObjectModel;
 
 namespace SimpleSimulator.Views
 {
@@ -33,6 +30,61 @@ namespace SimpleSimulator.Views
             }
         }
 
+        protected override void OnOpened(EventArgs e)
+        {
+            base.OnOpened(e);
+            AddYAxisLabels();
+            AddXAxisLabels();
+        }
+
+         private void AddXAxisLabels()
+        {
+            if (_canvas == null)
+            {
+                Console.WriteLine("Error: SimulationCanvas is not found.");
+                return;
+            }
+
+            foreach (var label in _simulationViewModel.XAxisLabels)
+            {
+                var textBlock = new TextBlock
+                {
+                    Text = label.Label,
+                    FontWeight = FontWeight.Bold
+                };
+
+                // Set the left position based on the bound value
+                Canvas.SetLeft(textBlock, label.Position);
+                // For the X-axis, we use a fixed top value
+                Canvas.SetTop(textBlock, 610);
+
+                _canvas.Children.Add(textBlock);
+            }
+        }
+
+        private void AddYAxisLabels()
+        {
+            if (_canvas == null)
+                return;
+
+            foreach (var label in _simulationViewModel.YAxisLabels)
+            {
+                var textBlock = new TextBlock
+                {
+                    Text = label.Label,
+                    FontWeight = FontWeight.Bold,
+                };
+
+                double leftPos = 32 - (textBlock.Text.Length - 1)*7;
+                // For the Y-axis, use a fixed left position. The calculation below is done so that the text is right-aligned with all elements underlying correctly.
+                Canvas.SetLeft(textBlock, leftPos);
+                // Set the top position from the bound value
+                Canvas.SetTop(textBlock, label.Position);
+                //Console.WriteLine("Y-Axis Label: " + label.Label + "LeftPos: " +leftPos+" TopPos: " + label.Position);
+                _canvas.Children.Add(textBlock);
+            }
+        }
+
         /// <summary>
         /// Event that triggers when the simulate button is clicked.
         /// </summary>
@@ -45,29 +97,6 @@ namespace SimpleSimulator.Views
                 Console.WriteLine("Error: SimulationCanvas is not found.");
                 return;
             }
-
-            //TODO find a clean way to reset the ellipse points while keeping the coordinate system. 
-
-            
-            // List<Control> coordinateElements = new List<Control>();
-
-
-            // foreach (var child in _canvas.Children)
-            // {
-            //     if (child is Line || (child is TextBlock tb && (string)tb.Tag == "AxisLabel"))
-            //     {
-            //         coordinateElements.Add((Control)child);
-            //     }
-            // }
-
-            // // Clear only the projectile elements
-            // _canvas.Children.Clear();
-
-            // // Re-add the coordinate system elements
-            // foreach (var element in coordinateElements)
-            // {
-            //     _canvas.Children.Add(element);
-            // }
             
             if (DataContext is SimulationViewModel viewModel)
             {
@@ -94,4 +123,3 @@ namespace SimpleSimulator.Views
         }
     }
 }
-

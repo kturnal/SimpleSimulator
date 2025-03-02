@@ -30,6 +30,11 @@ namespace SimpleSimulator.Models
 
         public bool HasHitGround(double time)
         {
+            if (time == 0) 
+            {
+                return false;
+            }
+
             return GetYPosition(time) < 0;
         }
     }
