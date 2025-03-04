@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <DefaultProject>src/SimpleSimulator.csproj</DefaultProject>
+  </PropertyGroup>
+</Project>

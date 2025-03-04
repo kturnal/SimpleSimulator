@@ -13,7 +13,7 @@ namespace SimpleSimulator.ViewModels
 {
     public class SimulationViewModel : INotifyPropertyChanged
     {
-        private double _speed = 30;
+        private double _speed = 40;
         private double _angle = 60;
         private double _height = 0;
         private string _simulationData = "Ready to simulate.";
