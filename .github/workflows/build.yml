@@ -37,13 +37,13 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore Dependencies
-        run: dotnet restore SimpleSimulator/SimpleSimulator.csproj
+        run: dotnet restore SimpleSimulator.csproj
 
       - name: Build Project
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish Executable
-        run: dotnet publish SimpleSimulator/SimpleSimulator.csproj -c Release -r ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true -o ./publish
+        run: dotnet publish SimpleSimulator.csproj -c Release -r ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true -o ./publish
 
       - name: Rename Output Files (Windows)
         if: matrix.os == 'windows-latest'
