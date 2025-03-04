@@ -20,12 +20,12 @@ jobs:
         include:
           - os: windows-latest
             runtime: win-x64
-            output: SimpleSimulator.exe
+            output_file: SimpleSimulator.exe
           - os: ubuntu-latest
             runtime: linux-x64
-            output: SimpleSimulator.AppImage
+            output_file: SimpleSimulator.AppImage
 
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout Repository
@@ -42,18 +42,25 @@ jobs:
       - name: Build Project
         run: dotnet build --configuration Release --no-restore
 
-      - name: Package Linux Binary (AppImage)
+      - name: Publish Executable
+        run: dotnet publish SimpleSimulator/SimpleSimulator.csproj -c Release -r ${{ matrix.runtime }} --self-contained true -p:PublishSingleFile=true -o ./publish
+
+      - name: Rename Output Files (Windows)
+        if: matrix.os == 'windows-latest'
+        run: mv ./publish/SimpleSimulator.exe ./publish/${{ matrix.output_file }}
+
+      - name: Rename Output Files (Linux)
         if: matrix.os == 'ubuntu-latest'
         run: |
           chmod +x ./publish/SimpleSimulator
-          mv ./publish/SimpleSimulator ./publish/SimpleSimulator.AppImage
+          mv ./publish/SimpleSimulator ./publish/${{ matrix.output_file }}
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: SimpleSimulator-${{ matrix.runtime }}
-          path: ./publish/*
-  
+          path: ./publish/${{ matrix.output_file }}
+
   release:
     needs: build
     runs-on: ubuntu-latest
@@ -67,18 +74,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: SimpleSimulator-win-x64
-          path: ./release/windows
+          path: ./release
 
       - name: Download Linux Build
         uses: actions/download-artifact@v4
         with:
           name: SimpleSimulator-linux-x64
-          path: ./release/linux
+          path: ./release
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./release/windows/SimpleSimulator.exe
-            ./release/linux/SimpleSimulator.AppImage
+            ./release/SimpleSimulator.exe
+            ./release/SimpleSimulator.AppImage
           token: ${{ secrets.GITHUB_TOKEN }}
