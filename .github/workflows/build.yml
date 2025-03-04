@@ -8,10 +8,24 @@ on:
     branches:
       - main
   workflow_dispatch:
+  release:
+    types:
+      - created
 
 jobs:
   build:
-    runs-on: windows-latest  # Use Windows to generate a .exe file
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        include:
+          - os: windows-latest
+            runtime: win-x64
+            output: SimpleSimulator.exe
+          - os: ubuntu-latest
+            runtime: linux-x64
+            output: SimpleSimulator.AppImage
+
+    runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
@@ -20,7 +34,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '9.0.x'  # Adjust if using another version
+          dotnet-version: '9.0.x'
 
       - name: Restore Dependencies
         run: dotnet restore
@@ -28,13 +42,16 @@ jobs:
       - name: Build Project
         run: dotnet build --configuration Release --no-restore
 
-      - name: Publish Executable
-        run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./publish
+      - name: Package Linux Binary (AppImage)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          chmod +x ./publish/SimpleSimulator
+          mv ./publish/SimpleSimulator ./publish/SimpleSimulator.AppImage
 
-      - name: Upload Artifact (Executable)
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: SimpleSimulator
+          name: SimpleSimulator-${{ matrix.runtime }}
           path: ./publish/*
   
   release:
@@ -46,14 +63,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Download Build Artifacts
+      - name: Download Windows Build
         uses: actions/download-artifact@v4
         with:
-          name: SimpleSimulator
-          path: ./release
+          name: SimpleSimulator-win-x64
+          path: ./release/windows
+
+      - name: Download Linux Build
+        uses: actions/download-artifact@v4
+        with:
+          name: SimpleSimulator-linux-x64
+          path: ./release/linux
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: ./release/*
+          files: |
+            ./release/windows/SimpleSimulator.exe
+            ./release/linux/SimpleSimulator.AppImage
           token: ${{ secrets.GITHUB_TOKEN }}
