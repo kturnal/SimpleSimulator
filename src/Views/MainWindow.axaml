@@ -17,11 +17,11 @@
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
             <TextBlock Text="Speed (m/s):" Margin="5"/>
-            <TextBox Text="{Binding Speed, Mode=TwoWay}" Width="50" Margin="5"/>
+            <TextBox Text="{Binding SpeedInput, Mode=TwoWay}" Width="50" Margin="5"/>
             <TextBlock Text="Angle (°):" Margin="5"/>
-            <TextBox Text="{Binding Angle, Mode=TwoWay}" Width="50" Margin="5"/>
+            <TextBox Text="{Binding AngleInput, Mode=TwoWay}" Width="50" Margin="5"/>
             <TextBlock Text="Height (m):" Margin="5"/>
-            <TextBox Text="{Binding Height, Mode=TwoWay}" Width="50" Margin="5"/>
+            <TextBox Text="{Binding HeightInput, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
             
         </StackPanel>

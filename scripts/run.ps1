@@ -1,3 +1,3 @@
-cd src
+Set-Location src
 dotnet run
-cd ..
+Set-Location ..

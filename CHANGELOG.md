@@ -10,6 +10,8 @@ Here we write upgrading notes for brands. It's a team effort to make them as
 straightforward as possible.
  
 ### Added
+- Added projectile simulation UI and logic.
+- Added GitHub actions pipelines to automate builds for Windows and Linux. 
  
 ### Changed
  
