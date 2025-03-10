@@ -20,3 +20,16 @@ This project is still WIP. An MVP of the solution will be done after the followi
     - Update README.md with instructions. 
     - Add a CHANGELOG.md to track version changes. 
     - Create a GitHub release for Windows and Linux (for v0.1.0)
+
+# Getting Started
+
+You can download the latest version of the executables (currently v0.0.1) from the Releases section. This includdes executables for Windows and Linux, depending on your environment.
+
+To run the project locally on your machine: 
+
+```
+git clone https://github.com/kbaker/SimpleSimulator
+cd SimpleSimulator
+dotnet build
+dotnet run --project src/SimpleSimulator.csproj
+```
