@@ -11,7 +11,7 @@ namespace SimpleSimulator
     {
         private NavigationService _navigationService;
         private SimulationViewModel _simulationViewModel;
-        private MainViewModel _mainViewModel;
+        private MainMenuViewModel _mainViewModel;
         private MainWindow _mainWindow;
 
         public override void Initialize()
@@ -29,7 +29,7 @@ namespace SimpleSimulator
                 _simulationViewModel = new SimulationViewModel(_navigationService);
                 
                 // ✅ Create the MainViewModel with NavigationService
-                _mainViewModel = new MainViewModel(_navigationService, _simulationViewModel);
+                _mainViewModel = new MainMenuViewModel(_navigationService, _simulationViewModel);
                 
                 // ✅ Set up MainWindow and bind the ViewModel
                 _mainWindow = new MainWindow(_mainViewModel);

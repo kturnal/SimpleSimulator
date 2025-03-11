@@ -9,7 +9,7 @@ using SimpleSimulator.Services;
 
 namespace SimpleSimulator.ViewModels
 {
-    public class MainViewModel : INotifyPropertyChanged
+    public class MainMenuViewModel : INotifyPropertyChanged
     {
         private readonly NavigationService _navigationService;
         private readonly SimulationViewModel _simulationViewModel;
@@ -18,7 +18,7 @@ namespace SimpleSimulator.ViewModels
         public ICommand OpenProjectileMotionCommand { get; }
         public ICommand GoBackCommand { get; }
 
-        public MainViewModel(NavigationService navigationService, SimulationViewModel simulationViewModel)
+        public MainMenuViewModel(NavigationService navigationService, SimulationViewModel simulationViewModel)
         {
             _navigationService = navigationService;
             _simulationViewModel = simulationViewModel;
