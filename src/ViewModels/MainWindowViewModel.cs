@@ -2,12 +2,13 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using SimpleSimulator.Views;
+using System;
 
 namespace SimpleSimulator.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private object _currentView;
+        private object _currentView = new object();
 
         public MainMenuViewModel MainMenuVM { get; }
 
@@ -19,8 +20,10 @@ namespace SimpleSimulator.ViewModels
 
         public MainWindowViewModel()
         {
+            // Initialize MainMenuVM
+            MainMenuVM = new MainMenuViewModel(NavigateToProjectileMotionCommand);
             // Start with Main Menu View
-            CurrentView = new MainMenuViewModel(NavigateToProjectileMotionCommand);
+            CurrentView = MainMenuVM;
         }
 
         public object CurrentView
@@ -38,10 +41,11 @@ namespace SimpleSimulator.ViewModels
             CurrentView = viewModel;
         }
 
-
         public ICommand NavigateToProjectileMotionCommand => new RelayCommand(() =>
         {
-             NavigateTo(new SimulationViewModel()); // SimulationViewModel olacak.
+            Console.WriteLine("navigating to proj motion");
+            NavigateTo(new SimulationViewModel());
+            OnPropertyChanged(nameof(CurrentView));
         });
     }
 }

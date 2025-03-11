@@ -9,9 +9,6 @@
         Title="Simple Simulator"
         Width="1024"
         Height="768">
-    <Window.Resources>
-    <helpers:BindingProxy x:Key="MainWindowViewModelProxy" Data="{Binding}" />
-  </Window.Resources>
   <Window.DataTemplates>
     <DataTemplate DataType="viewModels:MainMenuViewModel">
       <views:MainMenuView />

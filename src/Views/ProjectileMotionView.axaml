@@ -1,12 +1,12 @@
-    <!-- Setting DataContext in XAML for better performance -->
 <UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.Views.ProjectileMotionView"
         xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
-        x:DataType="viewModels:SimulationViewModel"
->  
+        x:DataType="viewModels:SimulationViewModel">  
     <Grid>
+          <TextBlock Text="Projectile Simulation View Loaded" 
+                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
