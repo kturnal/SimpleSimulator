@@ -9,8 +9,6 @@ namespace SimpleSimulator
    public partial class App : Application
     {
         private MainWindowViewModel _mainWindowViewModel;
-        private MainMenuViewModel _mainViewModel;
-        private SimulationViewModel _simulationViewModel;
         private MainWindow _mainWindow;
 
         public override void Initialize()
@@ -23,8 +21,6 @@ namespace SimpleSimulator
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 _mainWindowViewModel = new MainWindowViewModel();
-
-                _simulationViewModel = new SimulationViewModel();
                 
                 _mainWindow = new MainWindow();
 
