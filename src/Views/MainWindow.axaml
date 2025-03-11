@@ -9,11 +9,11 @@
         Height="768">
     <ContentControl Content="{Binding CurrentViewModel}">
         <ContentControl.Resources>
-            <DataTemplate DataType="{x:Type vm:MainMenuViewModel}">
+            <DataTemplate DataType="{x:Type vm:MainViewModel}">
                 <views:MainMenuView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:SimulationViewModel}">
-                <views:SimulationView />
+                <views:ProjectileMotionView />
             </DataTemplate>
         </ContentControl.Resources>
     </ContentControl>
