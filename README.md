@@ -1,5 +1,5 @@
 # SimpleSimulator
-A simple simulation tool for math&physics equations using MVVM architecture. 
+A simple simulation tool for math&physics equations using MVVM architecture using .NET and Avalonia. 
 
 ## Disclaimer
 

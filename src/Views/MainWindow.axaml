@@ -1,40 +1,12 @@
-    <!-- Setting DataContext in XAML for better performance -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.Views.MainWindow"
         xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
-        xmlns:views="clr-namespace:SimpleSimulator.Views"
-        x:DataType="viewModels:SimulationViewModel"
-        Title="Projectile Motion Simulator"
+        x:DataType="viewModels:MainViewModel"
+        Title="Simple Simulator"
         Width="1024"
-        Height="768">  
+        Height="768">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <TextBlock Text="Speed (m/s):" Margin="5"/>
-            <TextBox Text="{Binding SpeedInput, Mode=TwoWay}" Width="50" Margin="5"/>
-            <TextBlock Text="Angle (°):" Margin="5"/>
-            <TextBox Text="{Binding AngleInput, Mode=TwoWay}" Width="50" Margin="5"/>
-            <TextBlock Text="Height (m):" Margin="5"/>
-            <TextBox Text="{Binding HeightInput, Mode=TwoWay}" Width="50" Margin="5"/>
-            <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
-            
-        </StackPanel>
-        <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
-        
-        <!-- Simulation Canvas with Coordinate System -->
-        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray">
-            <!-- X-Axis -->
-            <Line StartPoint="50,600" EndPoint="800,600" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="X (m)" Canvas.Left="810" Canvas.Top="590" FontWeight="Bold"/>
-            <!-- Y-Axis -->
-            <Line StartPoint="50,50" EndPoint="50,600" Stroke="Black" StrokeThickness="2"/>
-            <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="20" FontWeight="Bold"/>
-        </Canvas>
+        <ContentControl Content="{Binding CurrentView}"/>
     </Grid>
 </Window>

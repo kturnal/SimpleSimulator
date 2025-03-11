@@ -5,9 +5,10 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Threading;
-using SimpleSimulator;
 using SimpleSimulator.Models;
-using SimpleSimulator.ViewModels;
+using SimpleSimulator.Services;
+using SimpleSimulator.Views;
+using System.Windows.Input;
 
 namespace SimpleSimulator.ViewModels
 {
@@ -118,9 +119,17 @@ namespace SimpleSimulator.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public SimulationViewModel()
+        public ICommand GoBackCommand { get; }
+        private readonly NavigationService _navigationService;
+
+        public SimulationViewModel(NavigationService navigationService)
         {
-            GenerateAxisLabels();
+            _navigationService = navigationService;
+
+            GoBackCommand = new RelayCommand(() =>
+            {
+                _navigationService.NavigateTo(new MainMenuView());
+            });
         }
 
         private void GenerateAxisLabels()
