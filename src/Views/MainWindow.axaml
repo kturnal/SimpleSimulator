@@ -7,5 +7,13 @@
         Title="Simple Simulator"
         Width="1024"
         Height="768">
-        <ContentControl Content="{Binding CurrentView}"/>
+  <Window.DataTemplates>
+    <DataTemplate DataType="viewModels:MainMenuViewModel">
+      <views:MainMenuView />
+    </DataTemplate>
+    <DataTemplate DataType="viewModels:SimulationViewModel">
+      <views:ProjectileMotionView />
+    </DataTemplate>
+  </Window.DataTemplates>
+  <ContentControl Content="{Binding CurrentView}"/>
 </Window>

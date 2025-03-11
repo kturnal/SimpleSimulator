@@ -7,7 +7,7 @@ namespace SimpleSimulator.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private object _currentView = new();
+        private object _currentView;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = "")
@@ -17,7 +17,7 @@ namespace SimpleSimulator.ViewModels
 
         public MainWindowViewModel()
         {
-            // ✅ Start with Main Menu View
+            // Start with Main Menu View
             CurrentView = new MainMenuView();
         }
 
@@ -35,5 +35,20 @@ namespace SimpleSimulator.ViewModels
         {
             CurrentView = viewModel;
         }
+
+        public void NavigateToProjectileSimulation()
+        {
+            NavigateTo(new SimulationViewModel());
+        }
+
+        public void NavigateToMainMenu()
+        {
+            NavigateTo(new MainMenuView());
+        }
+
+        public ICommand NavigateToProjectileMotionCommand => new RelayCommand(() =>
+        {
+            this.NavigateToProjectileSimulation();
+        });
     }
 }

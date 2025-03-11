@@ -10,16 +10,14 @@ using System.Collections.ObjectModel;
 
 namespace SimpleSimulator.Views
 {
-    public partial class ProjectileMotionView : Window
+    public partial class ProjectileMotionView : UserControl
     {
         private Canvas? _canvas;
-        private readonly SimulationViewModel _simulationViewModel;
+        public SimulationViewModel _simulationViewModel => (DataContext as SimulationViewModel)!;
 
         public ProjectileMotionView()
         {
             InitializeComponent();
-            _simulationViewModel = new SimulationViewModel(new MainWindowViewModel());
-            DataContext = _simulationViewModel;
             _canvas = this.FindControl<Canvas>("SimulationCanvas")!;
 
             // Manually bind the simulate button since Avalonia doesn't have built-in commands
@@ -28,29 +26,16 @@ namespace SimpleSimulator.Views
             {
                 simulateButton.Click += OnSimulateClicked;
             }
-        }
 
-        public ProjectileMotionView(SimulationViewModel simulationViewModel)
-        {
-            InitializeComponent();
-            _simulationViewModel = simulationViewModel;
-            DataContext = _simulationViewModel;
-            _canvas = this.FindControl<Canvas>("SimulationCanvas")!;
-
-            // Manually bind the simulate button since Avalonia doesn't have built-in commands
-            var simulateButton = this.FindControl<Button>("SimulateButton");
-            if (simulateButton != null)
-            {
-                simulateButton.Click += OnSimulateClicked;
-            }
-        }
-
-        protected override void OnOpened(EventArgs e)
-        {
-            base.OnOpened(e);
             AddYAxisLabels();
             AddXAxisLabels();
         }
+
+        // protected override void OnOpened(EventArgs e)
+        // {
+        //     base.OnOpened(e);
+
+        // }
 
         private void AddXAxisLabels()
         {

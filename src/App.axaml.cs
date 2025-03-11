@@ -6,12 +6,12 @@ using SimpleSimulator.ViewModels;
 
 namespace SimpleSimulator
 {
-    public partial class App : Application
+   public partial class App : Application
     {
-        private MainWindowViewModel? _mainWindowViewModel;
-        private MainMenuViewModel? _mainViewModel;
-        private SimulationViewModel? _simulationViewModel;
-        private MainWindow? _mainWindow;
+        private MainWindowViewModel _mainWindowViewModel;
+        private MainMenuViewModel _mainViewModel;
+        private SimulationViewModel _simulationViewModel;
+        private MainWindow _mainWindow;
 
         public override void Initialize()
         {
@@ -24,13 +24,11 @@ namespace SimpleSimulator
             {
                 _mainWindowViewModel = new MainWindowViewModel();
 
-                _simulationViewModel = new SimulationViewModel(_mainWindowViewModel);
+                _simulationViewModel = new SimulationViewModel();
                 
-                // ✅ Create the MainViewModel with NavigationService
-                _mainViewModel = new MainMenuViewModel(_mainWindowViewModel);
+                _mainViewModel = new MainMenuViewModel();
                 
-                // ✅ Set up MainWindow and bind the ViewModel
-                _mainWindow = new MainWindow(_mainWindowViewModel);
+                _mainWindow = new MainWindow();
 
                 desktop.MainWindow = _mainWindow;
             }

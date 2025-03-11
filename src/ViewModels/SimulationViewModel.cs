@@ -20,7 +20,6 @@ namespace SimpleSimulator.ViewModels
         private double _height = 0;
         private string _heightInput = "0";
         private string _simulationData = "Ready to simulate.";
-
         const double CoordinateSystemStartY = 50;   // Space from the left for the Y-axis
         const double CoordinateSystemStartX = 595;   // Bottom of the canvas in pixels
         const double ScaleFactor = 50;     // Scaling factor (meters to pixels)
@@ -72,7 +71,6 @@ namespace SimpleSimulator.ViewModels
                 OnPropertyChanged(nameof(AngleInput));
             }
         }
-    
 
         public double Height => _height;
         public string HeightInput
@@ -122,14 +120,9 @@ namespace SimpleSimulator.ViewModels
 
         public ICommand GoBackCommand { get; }
 
-        public SimulationViewModel(MainWindowViewModel mainWindowViewModel)
+        public SimulationViewModel()
         {
-            _mainWindowViewModel = mainWindowViewModel;
 
-            GoBackCommand = new RelayCommand(() =>
-            {
-                _mainWindowViewModel.NavigateTo(new MainMenuViewModel(_mainWindowViewModel));
-            });
         }
 
         private void GenerateAxisLabels()
