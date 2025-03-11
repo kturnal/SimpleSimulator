@@ -6,8 +6,8 @@
              x:DataType="viewModels:MainMenuViewModel">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Text="Select a Simulation!" FontSize="20" FontWeight="Bold" Margin="10"/>
-        <Button Content="Projectile Motion Simulation" Command="{}" Width="250" Margin="5"/>
+        <Button Content="Projectile Motion Simulation" Command="{Binding DataContext.NavigateToProjectileMotionCommand, RelativeSource={RelativeSource AncestorType=Window}}" Width="250" Margin="5"/>
         <Button Content="Dummy Simulation" Command="{Binding OpenProjectileMotionCommand}" Width="250" Margin="5"/>
     </StackPanel>
 </UserControl>
-<!-- Binding DataContext.NavigateToProjectileMotionCommand, RelativeSource={RelativeSource AncestorType=Window -->
+<!--  -->

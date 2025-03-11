@@ -7,7 +7,8 @@ namespace SimpleSimulator.Views
     {
         public MainMenuView()
         {
-            //InitializeComponent();
+            InitializeComponent();
+            
         }
     }
 }

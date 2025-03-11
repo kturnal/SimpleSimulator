@@ -9,6 +9,7 @@ namespace SimpleSimulator.Views
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
         }
     }
 }

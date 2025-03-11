@@ -48,7 +48,7 @@ namespace SimpleSimulator.ViewModels
 
         public ICommand NavigateToProjectileMotionCommand => new RelayCommand(() =>
         {
-            this.NavigateToProjectileSimulation();
+             NavigateTo(new SimulationViewModel());
         });
     }
 }
