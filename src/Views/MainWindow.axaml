@@ -3,13 +3,11 @@
         xmlns:vm="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
         x:Class="SimpleSimulator.Views.MainWindow"
+        x:CompileBindings="False"
         Title="Simple Simulator"
         Width="1024"
         Height="768">
     
-    <Window.DataContext>
-        <vm:MainMenuViewModel/>
-    </Window.DataContext>
 
     <ContentControl Content="{Binding CurrentView}">
         <ContentControl.Resources>
