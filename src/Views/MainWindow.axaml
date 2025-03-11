@@ -8,15 +8,16 @@
         Width="1024"
         Height="768">
     
-
-    <ContentControl Content="{Binding CurrentView}">
-        <ContentControl.Resources>
+    <Window.Resources>
+        <ResourceDictionary>
             <DataTemplate DataType="{x:Type vm:MainMenuViewModel}">
-                <views:MainMenuView/>
+                <views:MainMenuView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type vm:SimulationViewModel}">
-                <views:ProjectileMotionView/>
+                <views:ProjectileMotionView />
             </DataTemplate>
-        </ContentControl.Resources>
-    </ContentControl>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <ContentControl Content="{Binding CurrentView}"/>
 </Window>
