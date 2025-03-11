@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using SimpleSimulator.Views;
 
 namespace SimpleSimulator.ViewModels
 {
@@ -17,7 +18,7 @@ namespace SimpleSimulator.ViewModels
         public MainWindowViewModel()
         {
             // ✅ Start with Main Menu View
-            CurrentView = new MainMenuViewModel(this);
+            CurrentView = new MainMenuView();
         }
 
         public object CurrentView

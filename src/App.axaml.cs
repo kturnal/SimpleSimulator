@@ -22,7 +22,6 @@ namespace SimpleSimulator
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-
                 _mainWindowViewModel = new MainWindowViewModel();
 
                 _simulationViewModel = new SimulationViewModel(_mainWindowViewModel);
@@ -31,7 +30,7 @@ namespace SimpleSimulator
                 _mainViewModel = new MainMenuViewModel(_mainWindowViewModel);
                 
                 // ✅ Set up MainWindow and bind the ViewModel
-                _mainWindow = new MainWindow(_mainViewModel);
+                _mainWindow = new MainWindow(_mainWindowViewModel);
 
                 desktop.MainWindow = _mainWindow;
             }

@@ -5,13 +5,20 @@ namespace SimpleSimulator.Views
 {
     public partial class MainWindow : Window
     {
-        private MainMenuViewModel _mainViewModel;
+        private MainWindowViewModel _mainWindowViewModel;
 
-        public MainWindow(MainMenuViewModel mainViewModel)
+        public MainWindow(MainWindowViewModel mainWindowViewModel)
         {
             InitializeComponent(); // initializes the GUI components
-            _mainViewModel = mainViewModel;
-            DataContext = _mainViewModel;
+            _mainWindowViewModel = mainWindowViewModel;
+            DataContext = _mainWindowViewModel;
+        }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+            _mainWindowViewModel = new MainWindowViewModel();
+            DataContext = _mainWindowViewModel;
         }
     }
 }
