@@ -13,11 +13,5 @@ namespace SimpleSimulator.Views
             _mainViewModel = mainViewModel;
             DataContext = _mainViewModel;
         }
-
-        // Parameterless constructor for Avalonia
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
     }
 }

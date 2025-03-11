@@ -3,6 +3,7 @@
         xmlns:vm="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
         x:Class="SimpleSimulator.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
         Title="Simple Simulator"
         Width="1024"
         Height="768">
