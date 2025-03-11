@@ -1,13 +1,11 @@
     <!-- Setting DataContext in XAML for better performance -->
-<Window xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.Views.ProjectileMotionView"
         xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
         x:DataType="viewModels:SimulationViewModel"
-        Title="Projectile Motion Simulator"
-        Width="1024"
-        Height="768">  
+>  
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -38,4 +36,4 @@
             <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="20" FontWeight="Bold"/>
         </Canvas>
     </Grid>
-</Window>
+</UserControl>

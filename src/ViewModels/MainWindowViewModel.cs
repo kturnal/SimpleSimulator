@@ -6,9 +6,13 @@ namespace SimpleSimulator.ViewModels
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        private object _currentView;
+        private object _currentView = new();
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
 
         public MainWindowViewModel()
         {
@@ -29,11 +33,6 @@ namespace SimpleSimulator.ViewModels
         public void NavigateTo(object viewModel)
         {
             CurrentView = viewModel;
-        }
-
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

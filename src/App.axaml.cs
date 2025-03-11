@@ -8,11 +8,10 @@ namespace SimpleSimulator
 {
     public partial class App : Application
     {
-        private SimulationViewModel _simulationViewModel;
-        private MainMenuViewModel _mainViewModel;
-        private MainWindow _mainWindow;
-
-        private MainWindowViewModel _mainWindowViewModel;
+        private MainWindowViewModel? _mainWindowViewModel;
+        private MainMenuViewModel? _mainViewModel;
+        private SimulationViewModel? _simulationViewModel;
+        private MainWindow? _mainWindow;
 
         public override void Initialize()
         {
