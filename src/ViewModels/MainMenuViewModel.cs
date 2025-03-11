@@ -10,13 +10,11 @@ namespace SimpleSimulator.ViewModels
 {
     public class MainMenuViewModel
     {
-        private readonly MainWindowViewModel _mainWindowViewModel;
+        public ICommand NavigateToProjectileMotionCommand { get; }
 
-        public ICommand OpenProjectileMotionCommand { get; }
-
-        public MainMenuViewModel()
+        public MainMenuViewModel(ICommand navigateCommand)
         {
-
+            NavigateToProjectileMotionCommand = navigateCommand;
         }
     }
 }

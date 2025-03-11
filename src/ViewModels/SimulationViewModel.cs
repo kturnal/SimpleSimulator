@@ -122,7 +122,7 @@ namespace SimpleSimulator.ViewModels
 
         public SimulationViewModel()
         {
-
+            GenerateAxisLabels();
         }
 
         private void GenerateAxisLabels()

@@ -26,8 +26,6 @@ namespace SimpleSimulator
 
                 _simulationViewModel = new SimulationViewModel();
                 
-                _mainViewModel = new MainMenuViewModel();
-                
                 _mainWindow = new MainWindow();
 
                 desktop.MainWindow = _mainWindow;
