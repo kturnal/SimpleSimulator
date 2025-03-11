@@ -1,12 +1,20 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         x:Class="SimpleSimulator.Views.MainWindow"
-        xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
-        x:DataType="viewModels:MainViewModel"
+        xmlns:vm="clr-namespace:SimpleSimulator.ViewModels"
+        xmlns:views="clr-namespace:SimpleSimulator.Views"
+        DataContext="{Binding MainViewModel, Source={StaticResource Locator}}"
         Title="Simple Simulator"
         Width="1024"
         Height="768">
-    <Grid>
-        <ContentControl Content="{Binding CurrentView}"/>
-    </Grid>
+    <ContentControl Content="{Binding CurrentViewModel}">
+        <ContentControl.Resources>
+            <DataTemplate DataType="{x:Type vm:MainMenuViewModel}">
+                <views:MainMenuView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:SimulationViewModel}">
+                <views:SimulationView />
+            </DataTemplate>
+        </ContentControl.Resources>
+    </ContentControl>
 </Window>
