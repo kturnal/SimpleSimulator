@@ -3,19 +3,15 @@
         xmlns:vm="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
         x:Class="SimpleSimulator.Views.MainWindow"
-        x:DataType="vm:MainWindowViewModel"
         Title="Simple Simulator"
         Width="1024"
         Height="768">
-    
-    <ContentControl Content="{Binding CurrentView}">
-        <ContentControl.Resources>
-            <DataTemplate DataType="{x:Type vm:MainMenuViewModel}">
-                <views:MainMenuView/>
-            </DataTemplate>
-            <DataTemplate DataType="{x:Type vm:SimulationViewModel}">
-                <views:ProjectileMotionView/>
-            </DataTemplate>
-        </ContentControl.Resources>
-    </ContentControl>
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <ContentControl Content="{Binding CurrentView}"/>
+    </Grid>
 </Window>

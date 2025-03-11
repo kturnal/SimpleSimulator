@@ -1,8 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="SimpleSimulator.Views.MainMenuView"
-             xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
-             x:DataType="viewModels:MainMenuViewModel">
+             DataContext="{Binding}">
     
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
         <TextBlock Text="Select a Simulation!" FontSize="20" FontWeight="Bold" Margin="10"/>

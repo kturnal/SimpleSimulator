@@ -5,53 +5,25 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using SimpleSimulator.Views;
-using SimpleSimulator.Services;
 
 namespace SimpleSimulator.ViewModels
 {
-    public class MainMenuViewModel : INotifyPropertyChanged
+    public class MainMenuViewModel
     {
-        private readonly NavigationService _navigationService;
-        private readonly SimulationViewModel _simulationViewModel;
-        public object CurrentView => _navigationService.CurrentView;
+        private readonly MainWindowViewModel _mainWindowViewModel;
 
         public ICommand OpenProjectileMotionCommand { get; }
-        public ICommand GoBackCommand { get; }
 
-        public MainMenuViewModel(NavigationService navigationService, SimulationViewModel simulationViewModel)
+        public MainMenuViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            _navigationService = navigationService;
-            _simulationViewModel = simulationViewModel;
+            _mainWindowViewModel = mainWindowViewModel;
 
-            // ✅ Listen for changes in the navigation service
-            _navigationService.PropertyChanged += (s, e) =>
-            {
-                if (e.PropertyName == nameof(NavigationService.CurrentView))
-                {
-                    OnPropertyChanged(nameof(CurrentView));
-                }
-            };
-
-            // ✅ Navigate to the Projectile Motion Simulation
             OpenProjectileMotionCommand = new RelayCommand(() =>
             {
-                _navigationService.NavigateTo(new ProjectileMotionView(_simulationViewModel));
+                _mainWindowViewModel.NavigateTo(new SimulationViewModel(_mainWindowViewModel));
             });
-
-            // ✅ Go back to the Main Menu
-            GoBackCommand = new RelayCommand(() =>
-            {
-                _navigationService.NavigateTo(new MainMenuView());
-            });
-        }
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
     // ✅ Reusable ICommand Implementation
     public class RelayCommand : ICommand
     {

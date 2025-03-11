@@ -6,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using SimpleSimulator.Models;
-using SimpleSimulator.Services;
 using SimpleSimulator.Views;
 using System.Windows.Input;
 
@@ -119,16 +118,17 @@ namespace SimpleSimulator.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ICommand GoBackCommand { get; }
-        private readonly NavigationService _navigationService;
+        private readonly MainWindowViewModel _mainWindowViewModel;
 
-        public SimulationViewModel(NavigationService navigationService)
+        public ICommand GoBackCommand { get; }
+
+        public SimulationViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            _navigationService = navigationService;
+            _mainWindowViewModel = mainWindowViewModel;
 
             GoBackCommand = new RelayCommand(() =>
             {
-                _navigationService.NavigateTo(new MainMenuView());
+                _mainWindowViewModel.NavigateTo(new MainMenuViewModel(_mainWindowViewModel));
             });
         }
 

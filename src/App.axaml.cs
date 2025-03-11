@@ -2,17 +2,17 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using SimpleSimulator.Views;
-using SimpleSimulator.Services;
 using SimpleSimulator.ViewModels;
 
 namespace SimpleSimulator
 {
     public partial class App : Application
     {
-        private NavigationService _navigationService;
         private SimulationViewModel _simulationViewModel;
         private MainMenuViewModel _mainViewModel;
         private MainWindow _mainWindow;
+
+        private MainWindowViewModel _mainWindowViewModel;
 
         public override void Initialize()
         {
@@ -23,13 +23,13 @@ namespace SimpleSimulator
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                // ✅ Create the shared NavigationService
-                _navigationService = new NavigationService();
 
-                _simulationViewModel = new SimulationViewModel(_navigationService);
+                _mainWindowViewModel = new MainWindowViewModel();
+
+                _simulationViewModel = new SimulationViewModel(_mainWindowViewModel);
                 
                 // ✅ Create the MainViewModel with NavigationService
-                _mainViewModel = new MainMenuViewModel(_navigationService, _simulationViewModel);
+                _mainViewModel = new MainMenuViewModel(_mainWindowViewModel);
                 
                 // ✅ Set up MainWindow and bind the ViewModel
                 _mainWindow = new MainWindow(_mainViewModel);
