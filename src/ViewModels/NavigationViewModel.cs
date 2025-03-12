@@ -28,12 +28,27 @@ namespace SimpleSimulator.ViewModels
         public NavigationViewModel()
         {
 
-
             MainMenuVM = new MainMenuViewModel(NavigateToProjectileMotionCommand);
             SimulationVM = new SimulationViewModel(NavigateToMainMenuCommand);
+            Console.WriteLine($"MainMenuVM assigned? {MainMenuVM != null}");
+            Console.WriteLine($"SimulationVM assigned? {SimulationVM != null}");
+            Console.WriteLine("Initializing NavigationViewModel...");
 
-            _navigateToProjectileMotionCommand = new RelayCommand(() => NavigateTo(SimulationVM));
-            _navigateToMainMenuCommand = new RelayCommand(() => NavigateTo(MainMenuVM));
+            _navigateToProjectileMotionCommand = new RelayCommand(() =>
+            {
+                Console.WriteLine("Navigating to ProjectileMotionView...");
+                NavigateTo(SimulationVM);
+            });
+
+            _navigateToMainMenuCommand = new RelayCommand(() =>
+            {
+                Console.WriteLine("Navigating to MainMenuView...");
+                NavigateTo(MainMenuVM);
+            });
+
+            Console.WriteLine("Commands initialized.");
+Console.WriteLine($"ProjectileMotionCommand assigned? {_navigateToProjectileMotionCommand != null}");
+    Console.WriteLine($"MainMenuCommand assigned? {_navigateToMainMenuCommand != null}");
             // Start with Main Menu View
             CurrentView = MainMenuVM;
         }
