@@ -5,7 +5,7 @@ using System;
 
 namespace SimpleSimulator.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class NavigationViewModel : INotifyPropertyChanged
     {
         private object _currentView = new object();
 
@@ -13,16 +13,27 @@ namespace SimpleSimulator.ViewModels
 
         public SimulationViewModel SimulationVM { get; }
 
+        private readonly ICommand _navigateToProjectileMotionCommand;
+        private readonly ICommand _navigateToMainMenuCommand;
+
+        public ICommand NavigateToProjectileMotionCommand => _navigateToProjectileMotionCommand;
+        public ICommand NavigateToMainMenuCommand => _navigateToMainMenuCommand;
+
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        public MainWindowViewModel()
+        public NavigationViewModel()
         {
+
+
             MainMenuVM = new MainMenuViewModel(NavigateToProjectileMotionCommand);
             SimulationVM = new SimulationViewModel(NavigateToMainMenuCommand);
+
+            _navigateToProjectileMotionCommand = new RelayCommand(() => NavigateTo(SimulationVM));
+            _navigateToMainMenuCommand = new RelayCommand(() => NavigateTo(MainMenuVM));
             // Start with Main Menu View
             CurrentView = MainMenuVM;
         }
@@ -36,23 +47,17 @@ namespace SimpleSimulator.ViewModels
                 {
                     _currentView = value;
                     OnPropertyChanged();
+                    OnPropertyChanged(nameof(CurrentView));
                 }
             }
         }
 
         public void NavigateTo(object viewModel)
         {
-            CurrentView = viewModel;
+            if (viewModel == null) throw new ArgumentNullException(nameof(viewModel)); 
+
+            _currentView = viewModel;
+            OnPropertyChanged(nameof(CurrentView)); 
         }
-
-        public ICommand NavigateToProjectileMotionCommand => new RelayCommand(() =>
-        {
-            NavigateTo(SimulationVM);
-        });
-
-        public ICommand NavigateToMainMenuCommand => new RelayCommand(() =>
-        {
-            NavigateTo(MainMenuVM);
-        });
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using System;
+using SimpleSimulator.Views;
 
 namespace SimpleSimulator;
 
