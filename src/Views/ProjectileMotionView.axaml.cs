@@ -1,12 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
-using Avalonia.Markup.Xaml;
 using Avalonia.Media;
 using Avalonia.Threading;
 using System;
 using SimpleSimulator.ViewModels;
-using System.Collections.ObjectModel;
 
 namespace SimpleSimulator.Views
 {
@@ -33,10 +31,6 @@ namespace SimpleSimulator.Views
             base.OnDataContextChanged(e);
             if (DataContext is SimulationViewModel simulationViewModel)
             {
-                // Clear the canvas if necessary
-                //_canvas?.Children.Clear();
-
-                // Now that the DataContext is set, add the labels.
                 AddXAxisLabels();
                 AddYAxisLabels();
             }

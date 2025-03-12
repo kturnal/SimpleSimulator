@@ -1,7 +1,5 @@
-using System;
 using Avalonia.Controls;
 using SimpleSimulator.ViewModels;
-using SimpleSimulator.Helpers;
 
 namespace SimpleSimulator.Views
 {
@@ -12,10 +10,6 @@ namespace SimpleSimulator.Views
             InitializeComponent();
             var vm = new MainWindowViewModel();
             DataContext = vm;
-            if (Resources["MainWindowViewModelProxy"] is BindingProxy proxy)
-            {
-                proxy.Data = vm;
-            }
         }
     }
 }

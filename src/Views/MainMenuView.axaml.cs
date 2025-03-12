@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using SimpleSimulator.ViewModels;
 
 namespace SimpleSimulator.Views
 {
@@ -8,7 +7,6 @@ namespace SimpleSimulator.Views
         public MainMenuView()
         {
             InitializeComponent();
-            
         }
     }
 }
