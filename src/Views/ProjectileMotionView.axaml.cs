@@ -26,16 +26,21 @@ namespace SimpleSimulator.Views
             {
                 simulateButton.Click += OnSimulateClicked;
             }
-
-            AddYAxisLabels();
-            AddXAxisLabels();
         }
 
-        // protected override void OnOpened(EventArgs e)
-        // {
-        //     base.OnOpened(e);
+        protected override void OnDataContextChanged(EventArgs e)
+        {
+            base.OnDataContextChanged(e);
+            if (DataContext is SimulationViewModel simulationViewModel)
+            {
+                // Clear the canvas if necessary
+                //_canvas?.Children.Clear();
 
-        // }
+                // Now that the DataContext is set, add the labels.
+                AddXAxisLabels();
+                AddYAxisLabels();
+            }
+        }
 
         private void AddXAxisLabels()
         {
@@ -65,7 +70,10 @@ namespace SimpleSimulator.Views
         private void AddYAxisLabels()
         {
             if (_canvas == null)
+            {
+                Console.WriteLine("Error: SimulationCanvas is not found.");
                 return;
+            }
 
             foreach (var label in _simulationViewModel.YAxisLabels)
             {

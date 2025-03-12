@@ -1,10 +1,4 @@
-using Avalonia.Controls;
-using Avalonia.Threading;
-using System;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using SimpleSimulator.Views;
 
 namespace SimpleSimulator.ViewModels
 {

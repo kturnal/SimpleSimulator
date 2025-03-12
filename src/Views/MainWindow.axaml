@@ -17,5 +17,7 @@
       <views:ProjectileMotionView />
     </DataTemplate>
   </Window.DataTemplates>
-  <ContentControl Content="{Binding CurrentView}"/>
+    <Grid>
+        <ContentControl Content="{Binding CurrentView}"/>
+    </Grid>
 </Window>

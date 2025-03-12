@@ -1,12 +1,10 @@
 using System;
-using System.Linq;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Avalonia.Threading;
 using SimpleSimulator.Models;
-using SimpleSimulator.Views;
 using System.Windows.Input;
 
 namespace SimpleSimulator.ViewModels
@@ -116,12 +114,11 @@ namespace SimpleSimulator.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private readonly MainWindowViewModel _mainWindowViewModel;
+        public ICommand NavigateToMainMenuCommand { get; }
 
-        public ICommand GoBackCommand { get; }
-
-        public SimulationViewModel()
+        public SimulationViewModel(ICommand navigateToMainMenuCommand)
         {
+            NavigateToMainMenuCommand = navigateToMainMenuCommand;
             GenerateAxisLabels();
         }
 
@@ -133,7 +130,7 @@ namespace SimpleSimulator.ViewModels
             double xAxisLabelStartPos = CoordinateSystemStartY -5;
             double yAxisLabelStartPos = CoordinateSystemStartX -5;
 
-            // X-Axis Labels (0m to 10m)
+            // X-Axis Labels (0m to 140m)
             for (int i = 0; i <= 14; i++)
             {
                 XAxisLabels.Add(new AxisLabel

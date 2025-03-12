@@ -3,10 +3,10 @@
         x:Class="SimpleSimulator.Views.ProjectileMotionView"
         xmlns:viewModels="clr-namespace:SimpleSimulator.ViewModels"
         xmlns:views="clr-namespace:SimpleSimulator.Views"
-        x:DataType="viewModels:SimulationViewModel">  
+        x:DataType="viewModels:SimulationViewModel"
+        Width="1024"
+        Height="768">  
     <Grid>
-          <TextBlock Text="Projectile Simulation View Loaded" 
-                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-            <Button Content="Back" Command="{Binding GoBackCommand}" HorizontalAlignment="Left" Margin="10"/>
+            <Button Content="Back" Command="{Binding NavigateToMainMenuCommand}" HorizontalAlignment="Left" Margin="10"/>
             <TextBlock Text="Speed (m/s):" Margin="5"/>
             <TextBox Text="{Binding SpeedInput, Mode=TwoWay}" Width="50" Margin="5"/>
             <TextBlock Text="Angle (°):" Margin="5"/>
@@ -22,18 +22,16 @@
             <TextBlock Text="Height (m):" Margin="5"/>
             <TextBox Text="{Binding HeightInput, Mode=TwoWay}" Width="50" Margin="5"/>
             <Button x:Name="SimulateButton" Content="Simulate" Margin="10"/>
-            
         </StackPanel>
+
         <TextBlock Text="{Binding SimulationData}" Grid.Row="1" HorizontalAlignment="Center" Margin="10" FontSize="14" FontWeight="Bold"/>
-        
-        <!-- Simulation Canvas with Coordinate System -->
-        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray">
-            <!-- X-Axis -->
+
+        <Canvas x:Name="SimulationCanvas" Grid.Row="2" Background="Gray" Width="1024">
             <Line StartPoint="50,600" EndPoint="800,600" Stroke="Black" StrokeThickness="2"/>
             <TextBlock Text="X (m)" Canvas.Left="810" Canvas.Top="590" FontWeight="Bold"/>
-            <!-- Y-Axis -->
             <Line StartPoint="50,50" EndPoint="50,600" Stroke="Black" StrokeThickness="2"/>
             <TextBlock Text="Y (m)" Canvas.Left="30" Canvas.Top="20" FontWeight="Bold"/>
         </Canvas>
     </Grid>
 </UserControl>
+
