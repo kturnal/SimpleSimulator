@@ -2,6 +2,8 @@ name: Build and Release SimpleSimulator
 
 on:
   push:
+    tags:
+      - 'v*' 
     branches:
       - main
   pull_request:
@@ -11,6 +13,11 @@ on:
   release:
     types:
       - created
+
+permissions:
+  contents: write
+  packages: write
+  actions: read
 
 jobs:
   build:
