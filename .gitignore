@@ -1,6 +1,7 @@
-# Ignore build and bin directories
+# Ignore build, publish and bin directories
 bin/
 obj/
+publish/
 
 # Rider and VS Code directories
 .idea/
